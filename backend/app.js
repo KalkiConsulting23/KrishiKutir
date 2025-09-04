@@ -13,6 +13,7 @@ app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/order-items", require("./routes/orderItemRoutes"));
 app.use("/api/sowing-plans", require("./routes/sowingPlanRoutes"));
 app.use("/api/reports", require("./routes/reportRoutes"));
+app.use("/api/customers", require("./routes/customerRoutes"));
 
 module.exports = app;
 
