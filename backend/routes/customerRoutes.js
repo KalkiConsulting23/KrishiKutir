@@ -6,7 +6,7 @@ const {
   getCustomerById,
   updateCustomer,
   deleteCustomer
-} = require("../controllers/customerController");
+} = require("../controller/customerController.js");
 
 router.post("/", createCustomer);
 router.get("/", getCustomers);
