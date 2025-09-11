@@ -7,8 +7,8 @@ const customerSchema = new mongoose.Schema({
   address: { type: String },
   customer_type: { 
     type: String, 
-    enum: ["Regular", "Wholesale", "Retail", "Distributor", "Other"], 
-    default: "Regular" 
+    enum: ["One-Time", "Recurring"], 
+    default: "One-Time" 
   }
 }, { timestamps: true });
 

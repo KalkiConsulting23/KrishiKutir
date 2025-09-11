@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
 Modal,
@@ -16,17 +17,27 @@ import { useState } from 'react';
 
 
 const Nav = ({seeds}) => {
-console.log(seeds);
+
 const [toggle, settoggle] = useState(false);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
   const [seedItem, setseedItem] = useState([1]);
+  const  handleShow = async(value) => {
+   await fetch(`http://localhost:5000/api/orders`, {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json",
+     },
+     body: JSON.stringify(value),
+   }).then(() => {
+     message.success("Order Created");
+   })
+    
+  }
 
-const adder = (num) => {
-  setseedItem([...seedItem, num+1]);
-};
+
   
   return (
     <div className='w-full h-26 flex items-center justify-between border-b-1 p-3'>
@@ -38,21 +49,24 @@ const adder = (num) => {
       <h3 className='text-3xl font-extrabold'>DashBoard</h3>
       <Modal 
     title="Create Order"
-    visible={true}
+    visible={toggle}
     footer={null}
-    onCancel={() => settoggle(false)}
+    onCancel={() => {form.resetFields() ;settoggle(false)}}
     >
-      <Form>
-       <Form.Item label="Customer Name">
-        <Input  />
+      <Form form={form} onFinish={handleShow}>
+       <Form.Item name={"customer_name"} label="Customer Name">
+        <Input required />
        </Form.Item >
-       <Form.Item label="Delivery Date">
-        <Input  />
+       <Form.Item name={"delivery_date"} label="Delivery Date">
+        <Input type='date'  />
        </Form.Item>
-       <Form.Item label="Status">
-        <Input  />
+       <Form.Item name={"order_type"}  label="Order Type">
+        <Select>
+          <Select.Option value="One-Time">One Time</Select.Option>
+          <Select.Option value="Recurring">Recurring/Weekly Order</Select.Option>
+        </Select>
        </Form.Item>
-    <Form.List name="items">
+    <Form.List  name="items">
   {(fields, { add, remove },{errors}) => (
     <>
       {fields.map(({ index,name}) => (
@@ -62,9 +76,9 @@ const adder = (num) => {
             name={[name, "item"]}
             rules={[{ required: true, message: "Missing item" }]}
           >
-             <Select className='min-w-50' placeholder="Select an item">
+             <Select aria-required className='min-w-50' placeholder="Select an item">
               {seeds.map((seed) => (
-                <Select.Option key={seed._id} value={seed._id}>
+                <Select.Option  key={seed._id} value={seed._id}>
                   {seed.name}
                 </Select.Option>
               ))}
@@ -76,7 +90,7 @@ const adder = (num) => {
             name={[name, "qty"]}
             rules={[{ required: true, message: "Missing quantity" }]}
           >
-            <InputNumber min={1} placeholder="Quantity" />
+            <InputNumber required min={1} placeholder="Quantity" />
           </Form.Item>
           <Button danger onClick={() => remove(name)}>Remove</Button>
         </Space>
@@ -88,6 +102,22 @@ const adder = (num) => {
     </>
   )}
 </Form.List>
+ <Form.Item name={"email"} label="Email">
+        <Input type='email'  />
+       </Form.Item >
+       <Form.Item name={"phone"} label="Phone">
+        <Input type='text' required  minLength={10} maxLength={10} />
+       </Form.Item >
+       <Form.Item name={"address"} label="Address">
+        <Input type='text' required  />
+       </Form.Item >
+
+<div className='flex justify-end'>
+        
+        <div>
+         <button className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded' type='submit'>Submit Order</button>
+        </div>
+       </div>
 </Form>
       {/* <Form.List>
         {seedItem.map((item, index) => (
@@ -110,12 +140,7 @@ const adder = (num) => {
       </Form.List> */}
 
       
-       <div className='flex justify-end'>
-        
-        <div>
-         <button className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded'>Submit Order</button>
-        </div>
-       </div>
+       
       
       </Modal>
      

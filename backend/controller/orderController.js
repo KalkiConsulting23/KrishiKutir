@@ -5,27 +5,27 @@ const SowingPlan = require("../models/SowingPlan");
 
 exports.createOrder = async (req, res) => {
   try {
-    const { customer_name, delivery_date, status, items } = req.body;
+    const { customer_name, delivery_date, items } = req.body;
 
-    const order = new Order({ customer_name, delivery_date, status });
+    const order = new Order({ customer_name, delivery_date });
     await order.save();
 
     const orderItems = await Promise.all(items.map(async (item) => {
       const orderItem = new OrderItem({
         order_id: order._id,
-        seed_variety_id: item.seed_variety_id,
-        quantity_g: item.quantity_g
+        seed_variety_id: item.item,
+        quantity_g: item.qty
       });
       await orderItem.save();
 
       // Auto calculate sowing
-      const variety = await SeedVariety.findById(item.seed_variety_id);
+      const variety = await SeedVariety.findById(item.item);
       if (!variety) throw new Error("Seed variety not found");
 
       const sowingDate = new Date(delivery_date);
       sowingDate.setDate(sowingDate.getDate() - variety.growth_days);
 
-      const tray1010 = Math.ceil(item.quantity_g / variety.out_1010_g);
+      const tray1010 = Math.ceil(item.qty / variety.out_1010_g);
       const seedRequired = tray1010 * variety.seed_per_1010_g;
 
       const sowingPlan = new SowingPlan({

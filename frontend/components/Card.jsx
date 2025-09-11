@@ -13,17 +13,17 @@ const Card = ({title,number,category,children,date}) => {
   useEffect(() => {
     if(category=="Deliveries"){
       fetch(`http://localhost:5000/api/orders`)
-      .then(response => response.json())
-      .then(data => setorders(data));
+      .then(response => setorders(response))
+     
     }
     else{
       fetch(`http://localhost:5000/api/${category}`)
-      .then(response => response.json())
-      .then(data => setapiData(data));
+      .then(response => setapiData(response));
+      
     }
   
      
-  })
+  },[])
 
   return (
     <div className='Card border-2 container flex flex-col justify-evenly w-2/10 h-4/10 p-2 bg-amber-50 rounded-2xl'>

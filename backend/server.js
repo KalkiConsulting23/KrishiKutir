@@ -2,7 +2,18 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 const PORT = process.env.PORT || 5000;
-
+const cors = require('cors');
+const express = require('express');
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+app.use(
+  express.urlencoded({ extended: true })
+);
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log('MongoDB connected');
   app.listen(PORT, () => {
