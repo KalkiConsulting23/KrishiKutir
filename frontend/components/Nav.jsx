@@ -9,8 +9,9 @@ Select,
 InputNumber,
 Button,
 Space,
+
 Divider,
-message,
+message
 } from "antd";
 import { useState } from 'react';
 
@@ -31,8 +32,20 @@ const [toggle, settoggle] = useState(false);
        "Content-Type": "application/json",
      },
      body: JSON.stringify(value),
-   }).then(() => {
-     message.success("Order Created");
+   }).then((response) => {
+    if(response.ok){
+      window.alert("Order Created");
+      settoggle(false);
+      form.resetFields();
+      window.location.reload();
+      
+    }
+    else{
+      response.json().then((data) => {
+        console.log(data);
+      });
+    }
+    //  message.success("Order Created");
    })
     
   }

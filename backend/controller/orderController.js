@@ -6,7 +6,7 @@ const SowingPlan = require("../models/SowingPlan");
 exports.createOrder = async (req, res) => {
   try {
     const { customer_name, delivery_date, items } = req.body;
-
+     delivery_date=delivery_date.toISOString().split('T')[0]
     const order = new Order({ customer_name, delivery_date });
     await order.save();
 

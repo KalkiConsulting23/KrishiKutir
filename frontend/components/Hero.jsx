@@ -11,9 +11,9 @@ const Hero = () => {
       
         <Card title={"Delivery Today"} number={55} category={"Deliveries"} date={date}></Card>
         <Card title={"Seeds Varieties"} number={100} category={"seed-varieties"}></Card>
-        <Card title={"Total Customer"} number={55}>
+        {/* <Card title={"Total Customer"} number={55}>
           <h1>Under testing</h1>
-        </Card>
+        </Card> */}
         <Card title={"Sowing today"} number={55} category={"sowing-plans"} date={date}></Card>
         {/* <Card title={"Pending Orders"} number={55} category={"orders"}></Card> */}
     </div>

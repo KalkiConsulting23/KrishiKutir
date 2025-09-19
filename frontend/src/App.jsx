@@ -9,7 +9,7 @@ function App() {
 useEffect(() => {
     
       fetch(`http://localhost:5000/api/seed-varieties`)
-      .then(response => setseeds(response));
+      .then(response => response.json()).then(data => setseeds(data));
       
     }
    
