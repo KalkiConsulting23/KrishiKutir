@@ -2,11 +2,12 @@ const Order = require("../models/Order");
 const OrderItem = require("../models/OrderItem");
 const SeedVariety = require("../models/SeedVariety");
 const SowingPlan = require("../models/SowingPlan");
+const SeedStock = require("../models/SeedStock");
 
 exports.createOrder = async (req, res) => {
   try {
     const { customer_name, delivery_date, items } = req.body;
-     delivery_date=delivery_date.toISOString().split('T')[0]
+
     const order = new Order({ customer_name, delivery_date });
     await order.save();
 
@@ -37,6 +38,21 @@ exports.createOrder = async (req, res) => {
         seed_required_g: seedRequired
       });
       await sowingPlan.save();
+
+      const SeedStock = require("../models/SeedStock");
+
+      // After order items creation
+      for (const item of items) {
+        let stock = await SeedStock.findOne({ seed_variety_id: item.seed_variety_id });
+
+        if (!stock || stock.total_quantity_g < item.quantity_g) {
+          return res.status(400).json({ error: "Insufficient seed stock!" });
+        }
+
+        stock.total_quantity_g -= item.quantity_g;
+        stock.last_updated = Date.now();
+        await stock.save();
+      }
 
       return orderItem._id;
     }));

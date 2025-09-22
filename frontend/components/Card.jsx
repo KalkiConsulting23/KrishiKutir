@@ -6,7 +6,7 @@ const Card = ({title,number,category,children,date}) => {
 
   // const data =  fetch(`http://localhost:5000/api/${category}`);
   // console.log(category);
- console.log(date);
+
 
   const [apiData, setapiData] = useState([])
   const [orders, setorders] = useState([])
@@ -33,7 +33,7 @@ const Card = ({title,number,category,children,date}) => {
     <h2 className='text-3xl'>{title}</h2>
         </div>
         <div>
-    <h3 className='text-2xl'>{orders.filter((order) => order.delivery_date == date).length}</h3>
+    <h3 className='text-2xl'>{orders.filter((order) => order.delivery_date.split('T')[0] == date).length}</h3>
 {children}
         </div>
         </>
