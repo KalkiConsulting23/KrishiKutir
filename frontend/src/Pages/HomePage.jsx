@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from '../../components/Nav'
 import Nav2 from '../../components/Nav2'
+import  Footer  from '../../components/Footer';
 
 const HomePage = () => {
     const categories = [
@@ -129,6 +130,7 @@ const HomePage = () => {
         </div>
       </div>
     </section>
+    <Footer/>
        </div>
     </div>
   )
