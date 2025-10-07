@@ -5,6 +5,7 @@ import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
+import Tools from './Pages/Tools'
 
 function App() {
 //   const [seeds, setseeds] = useState([])
@@ -28,6 +29,7 @@ function App() {
   </div> */}
    <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/tools" element={<Tools />} />
         {/* <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} /> */}
       </Routes>
