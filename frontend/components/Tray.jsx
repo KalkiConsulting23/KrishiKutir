@@ -44,7 +44,7 @@ const Tray = () => {
                         <h3>Total Amount :</h3>
                     </div>
                     <div>
-                        <h3>Seeds Amount :</h3>
+                        <h3>Seeds Amount :</h3> 
                     </div>
                 </div>
             </div>
